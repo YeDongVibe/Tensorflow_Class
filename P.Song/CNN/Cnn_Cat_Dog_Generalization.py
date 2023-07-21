@@ -19,6 +19,7 @@ model.add(layers.MaxPooling2D(2,2))
 
 # 완전 연결 층 (전역 패턴 추출, 분류기)
 model.add(layers.Flatten()) # 결과 1차원 백터로 변환
+model.add(layers.Dropout(0.5))
 model.add(layers.Dense(512, activation='relu')) # 512차원 벡터공간에 투영
 model.add(layers.Dense(1, activation='sigmoid')) # 2진 데이터라서 시그모이드 사용
 
