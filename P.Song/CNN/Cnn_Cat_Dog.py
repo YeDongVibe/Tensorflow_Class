@@ -72,10 +72,16 @@ val_loss = history.history['val_loss']
 epochs = range(1, len(acc) + 1)
 
 plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1) # 이미지를 총 2개만들 것인데, 첫번째에 위치시킴
+plt.plot(epochs, acc, 'bo', label = 'Training Accuracy')
+plt.plot(epochs, val_acc, 'r', label = 'Validation Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
 
-plt.subplot(1, 2, 1)
+
+plt.subplot(1, 2, 2) 
 plt.plot(epochs, loss, 'bo', label = 'Training Loss')
-plt.plot(epochs, val_acc, 'r', label = 'Validation Loss')
+plt.plot(epochs, val_loss, 'r', label = 'Validation Loss')
 plt.title('Training and Validation Loss')
 plt.legend()
 

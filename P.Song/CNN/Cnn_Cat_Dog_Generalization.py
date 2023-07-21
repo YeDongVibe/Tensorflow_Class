@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 model = models.Sequential()
 # 필터수(32)
 model.add(layers.Conv2D(32, (3, 3), activation= 'relu', input_shape = (150, 150, 3)))
-model.add(layers.MaxPooling2D(2,2)) # 최대 풀링 연산 적용할 윈도우 사이즈(다운샘플링:크기 축소)
-model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D(2,2)) # 최대 풀링 연산 적용할 윈도우 사이즈(다운샘플링:크기 축소) -> 각 위치에 지역적 패턴을 추출 및 검출
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))# -> 각 위치의 값을 하나로 압축하는 과정이라 생각하면 된다.
 model.add(layers.MaxPooling2D(2,2))
 model.add(layers.Conv2D(128, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D(2,2))
@@ -19,7 +19,7 @@ model.add(layers.MaxPooling2D(2,2))
 
 # 완전 연결 층 (전역 패턴 추출, 분류기)
 model.add(layers.Flatten()) # 결과 1차원 백터로 변환
-model.add(layers.Dropout(0.5))
+model.add(layers.Dropout(0.5)) # 랜덤하게 절반만큼 특성 값 0으로 만들기
 model.add(layers.Dense(512, activation='relu')) # 512차원 벡터공간에 투영
 model.add(layers.Dense(1, activation='sigmoid')) # 2진 데이터라서 시그모이드 사용
 
@@ -59,7 +59,7 @@ valid_generator = test_datagen.flow_from_directory(
 # 모델 훈련
 history = model.fit(
     train_generator, 
-    steps_per_epoch=100, # 20*100 = 총 훈련 데이터 갯수
+    steps_per_epoch=100, # 20*100 = 총 훈련 데이터 갯수 -> 한 에폭당 업데이트를 몇번 할것인가
     epochs=30, 
     validation_data=valid_generator, 
     validation_steps=50)
@@ -72,11 +72,18 @@ val_loss = history.history['val_loss']
 
 epochs = range(1, len(acc) + 1)
 
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(10, 5)) # 이미지의 사이즈 조절(10인치 5인치로 조정 : 가*세)
 
-plt.subplot(1, 2, 1)
+plt.subplot(1, 2, 1) # 이미지를 총 2개만들 것인데, 첫번째에 위치시킴
+plt.plot(epochs, acc, 'bo', label = 'Training Accuracy')
+plt.plot(epochs, val_acc, 'r', label = 'Validation Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+
+
+plt.subplot(1, 2, 2) 
 plt.plot(epochs, loss, 'bo', label = 'Training Loss')
-plt.plot(epochs, val_acc, 'r', label = 'Validation Loss')
+plt.plot(epochs, val_loss, 'r', label = 'Validation Loss')
 plt.title('Training and Validation Loss')
 plt.legend()
 

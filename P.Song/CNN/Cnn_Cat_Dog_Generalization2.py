@@ -32,12 +32,12 @@ model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['acc'])
 # 데이터 전처리와 증강 설정
 train_datagen = ImageDataGenerator(
     rescale=1./255,
-    rotation_range=40,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
+    rotation_range=40, # 회전을 몇 도 시킬것인가
+    width_shift_range=0.2, # 수평으로 평행 이동
+    height_shift_range=0.2, # 수직으로 평행 이동
+    shear_range=0.2, # y축 방향으로 각도 증가
+    zoom_range=0.2, # 확대/축소 범위
+    horizontal_flip=True, # 좌우 대칭
     fill_mode='nearest'
 )
 
