@@ -10,7 +10,7 @@ X = np.array([[0, 0],
              [1, 1]], dtype=np.float32)
 y_and = np.array([[0], [0], [0], [1]], dtype=np.float32) # and 정답
 y_or = np.array([[0], [1], [1], [1]], dtype=np.float32) # or 정답
-y_xor = np.array([[0], [1], [1], [1]], dtype=np.float32) # xor 정답
+y_xor = np.array([[0], [1], [1], [0]], dtype=np.float32) # xor 정답
 
 y_and = tf.keras.utils.to_categorical(y_and)
 y_or = tf.keras.utils.to_categorical(y_or)
